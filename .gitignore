@@ -99,3 +99,10 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# idea
+ananas-doc.iml
+.idea/
+
+# html
+build/
