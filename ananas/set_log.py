@@ -9,9 +9,9 @@ sys.setdefaultencoding("utf-8")
 
 class DocLog(object):
 
-    note_cache_file = "template/.cache/note"
+    note_cache_file = "template/_version/note"
 
-    version_cache_file = "template/.cache/version"
+    version_cache_file = "template/_version/version"
 
     note_list = []
 
@@ -62,7 +62,7 @@ class DocLog(object):
         self.load_note()
         now_date = datetime.datetime.now().strftime('%Y-%m-%d')
         now_time = datetime.datetime.now().strftime('%H:%M')
-        yml_file = open("template/.cache/version.yml", 'r')
+        yml_file = open("template/_version/version.yml", 'r')
         log = yaml.load(yml_file).get('version', None)
         docs = {
             'date': now_date,
@@ -83,7 +83,7 @@ class DocLog(object):
             'version': log
         }
         yml_file.close()
-        yml_file = open("template/.cache/version.yml", 'w')
+        yml_file = open("template/_version/version.yml", 'w')
         yaml.dump(_doc, yml_file)
         yml_file.close()
         log_doc = "\n## "

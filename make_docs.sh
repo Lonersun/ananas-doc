@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Api文档生成小工具v1.0"
-vim template/.cache/note
-vim template/.cache/version
+vim template/_version/note
+vim template/_version/version
 echo "开始生成文档...."
 python ananas/set_error.py
 python ananas/set_log.py set_markdown
