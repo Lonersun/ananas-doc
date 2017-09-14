@@ -11,6 +11,7 @@ make html
 echo "文档生成完毕."
 
 #echo "开始部署..."
+#ssh root@192.168.10.154 rm -rf /data/web/aoao/*
 #scp -r build/html/* root@192.168.10.154:/data/web/aoao/
 #echo "部署完毕"
 
