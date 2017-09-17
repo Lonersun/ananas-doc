@@ -6,7 +6,7 @@ python == 2.7
 安装方法：
 
 ```
-python setup install
+pip install ananas-doc
 ```
 
 
