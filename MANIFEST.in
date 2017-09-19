@@ -1,0 +1,8 @@
+include ananasdoc/template/_static/css/*.css
+include ananasdoc/template/_static/images/*.png
+include ananasdoc/template/_static/js/*.js
+include ananasdoc/template/_version/.note
+include ananasdoc/template/_version/.version
+include ananasdoc/template/_version/*.yml
+include ananasdoc/index.rst
+

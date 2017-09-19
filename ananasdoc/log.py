@@ -1,22 +1,29 @@
 # -*- coding:utf-8 -*-
 import sys, yaml, datetime
 
-from conf import log_doc_config
-
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
 
-class DocLog(object):
+class AnanasLog(object):
 
-    note_cache_file = "template/_version/note"
+    note_cache_file = "template/_version/.note"
 
-    version_cache_file = "template/_version/version"
+    version_cache_file = "template/_version/.version"
+
+    version_yml = "template/_version/version.yml"
+
+    log_md = "docs/log.md"
 
     note_list = []
 
-    def __init__(self):
-        pass
+    def __init__(self, **kwargs):
+        self.path = kwargs.get('path')
+        self.log_doc_config = kwargs.get('log_doc_config')
+        self.note_cache_file = self.path + "/" + self.note_cache_file
+        self.version_cache_file = self.path + "/" + self.version_cache_file
+        self.version_yml = self.path + "/" + self.version_yml
+        self.log_md = self.path + "/" + self.log_md
 
     def load_note(self):
         """
@@ -62,13 +69,13 @@ class DocLog(object):
         self.load_note()
         now_date = datetime.datetime.now().strftime('%Y-%m-%d')
         now_time = datetime.datetime.now().strftime('%H:%M')
-        yml_file = open("template/_version/version.yml", 'r')
+        yml_file = open(self.version_yml, 'r')
         log = yaml.load(yml_file).get('version', None)
         docs = {
             'date': now_date,
             'time': now_time,
             'version': self.version,
-            'author': log_doc_config.get('author', ''),
+            'author': self.log_doc_config.get('author', ''),
             'note': self.note_list
         }
         if log:
@@ -83,11 +90,11 @@ class DocLog(object):
             'version': log
         }
         yml_file.close()
-        yml_file = open("template/_version/version.yml", 'w')
+        yml_file = open(self.version_yml, 'w')
         yaml.dump(_doc, yml_file)
         yml_file.close()
         log_doc = "\n## "
-        log_doc += log_doc_config.get('log_title') + "\n"
+        log_doc += self.log_doc_config.get('log_title') + "\n"
         for _log in log:
             log_doc += "### " + _log['date'] + "\n\n"
             log_doc += "**版本:** " + _log['version'] + "\n\n"
@@ -98,7 +105,7 @@ class DocLog(object):
                 log_doc += "* " + v
             log_doc += "\n"
 
-        f = file("ananas/docs/log_doc.md", "w+")
+        f = file(self.log_md, "w+")
         f.write(log_doc)
         f.close()
 
@@ -107,28 +114,20 @@ class DocLog(object):
 
         :return:
         """
-        note_doc = "# 请输入本次升级内容，一行为一条，请不要输入空行\n#\n"
+        note_doc = """
+# Please enter a submission message to explain the updated content.
+#
+# Lines starting with '#' will be ignored, and each line represents a title
+        """
+        note_doc += "\n"
         f = file(self.note_cache_file, "w+")
         f.write(note_doc)
         f.close()
         self.load_version()
-        version_doc = "# 请输入本次升级文档版本号\n\n"
-        version_doc += "# 当前最新版本为" + str(self.version)
+        version_doc = """# Write a message for version:
+        """
+        version_doc += "\n# The latest version is" + str(self.version)
+        version_doc += "\n# Lines starting with '#' will be ignored.\n"
         f = file(self.version_cache_file, "w+")
         f.write(version_doc)
         f.close()
-
-if __name__ == '__main__':
-    if not log_doc_config.get('if_set_log'):
-        pass
-    else:
-        cmd = sys.argv[1]
-        server = DocLog()
-        if cmd == "set_markdown":
-            server.set_md()
-            print "doc log set_markdown success!"
-        elif cmd == "initialize":
-            server.initialize()
-            print "doc log initialize success!"
-
-

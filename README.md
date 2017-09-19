@@ -8,7 +8,6 @@ ananas-doc 是基于sphinx封装的用于生成文档的小工具，它具有一
 * 增加了错误码生成功能，可自动生成错误码；
 * 增加自定义配色方案，界面调整更加简单，
 * 配合yml接口定义自动生成接口文档，减轻了文档维护的成本
-* 自动化部署，一键上线。
 
 ## 安装
 
@@ -17,16 +16,23 @@ python == 2.7
 安装方法：
 
 ```
-python setup install
+pip install ananas-doc
 
 ```
 
 
 ## 使用
 
+### 初始化
+
+```
+ananas-mkdoc <project name>
+
+```
+
 ### 更改配置文件
 
-根据具体需求更改ananas/config.py
+根据具体需求更改conf.py
 
 ### 自动生成错误码文档
 
@@ -61,25 +67,41 @@ log_doc_config = {
     "log_title": "四、更新日志",
 }
 ```
+
 ### 自动生成API接口文档
 
 暂不支持
 
-### 自动化部署
-
-修改 make_docs.sh 文件
+### 添加需要更改的MarkDown文件
 
 ```
-echo "开始部署..."
-scp -r build/html/* root@192.168.10.154:/data/web/aoao/
-echo "部署完毕."
+index_doc_config = {
+
+    # 文档标题
+    'title': "Ananas",
+
+    # 文档简介
+    'content': "Ananas",
+
+    # 需要包含的MarkDown文件 如开启了错误码、日志自动生成，请添加 docs/log.md  docs/error.md
+    "nav": []
+}
+
 ```
+
+### 自定义页面效果
+
+请修改 template/_static
+
+### 自定义Logo
+
+请替换 template/_static/images/logo.png
 
 ### 生成文档
 
 1. 更改配置文件
-2. 将MarkDown文件放入/ananas/docs文件夹
-3. 执行 sh make_docs.sh
+2. 将MarkDown文件放入docs文件夹
+3. 执行 make doc
 4. 文档生成成功
 
 

@@ -3,18 +3,17 @@ import sys
 
 from importlib import import_module
 
-from conf import errors_doc_config
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
 
-class SetErrorDocs:
+class AnanasError(object):
 
     docs = ""
     error_docs = ""
 
-    def __init__(self, if_set_errors, module_dir, module_name, error_title):
+    def __init__(self, **kwargs):
         """
 
         :param if_set_errors:
@@ -22,20 +21,20 @@ class SetErrorDocs:
         :param module_name:
         :param error_title:
         """
-        self.if_set_errors = if_set_errors
-        self.module_dir = module_dir
-        self.module_name = module_name
-        self.error_title = error_title
-        self.title = "\n\n## " + error_title + "\n\n"
+        self.if_set_errors = kwargs.get('if_set_errors')
+        self.module_dir = kwargs.get('module_dir')
+        self.module_name = kwargs.get('module_name')
+        self.error_title = kwargs.get('error_title')
+        self.title = "\n\n## " + kwargs.get('error_title') + "\n\n"
+        self.path = kwargs.get('path')
 
-    def run(self):
+    def set_md(self):
         """
 
         :return:
         """
         self.set_errors()
         self.write_file()
-        print "set error doc success！"
 
     def set_errors(self):
         """
@@ -101,19 +100,8 @@ class SetErrorDocs:
         self.docs = self.title + self.docs
 
     def write_file(self):
-        file_dir = "ananas/docs/error_doc.md"
+        file_dir = self.path + "/docs/error.md"
         f = file(file_dir, "w+")
         f.write(self.docs)
         f.close()
 
-if __name__ == '__main__':
-
-    if_set_errors = errors_doc_config.get('if_set_errors')
-    if if_set_errors:
-        module_dir = errors_doc_config.get('module_dir')
-        module_name = errors_doc_config.get('module_name')
-        error_title = errors_doc_config.get('error_title')
-        service = SetErrorDocs(if_set_errors, module_dir, module_name, error_title)
-        service.run()
-    else:
-        pass
