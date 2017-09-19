@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(name='ananas-doc',
-      version=1.1,
+      version=1.2,
       description=u"docs tools",
       long_description="",
       classifiers=[],

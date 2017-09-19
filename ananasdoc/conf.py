@@ -61,8 +61,7 @@ class Config(object):
         :return:
         """
         conf_str = ""
-        conf_str += """
-# -*- coding: utf-8 -*-
+        conf_str += """# -*- coding: utf-8 -*-
 #
 # ananas documentation config
 #

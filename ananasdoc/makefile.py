@@ -19,6 +19,8 @@ current_root=`pwd`
 doc:
 	@python -mananasdoc.template $(current_root)
 
+%: Makefile
+	@python -msphinx -M html . build
         """
         f = file(self.path + "/Makefile", "w+")
         f.write(content)

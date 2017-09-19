@@ -83,7 +83,7 @@ index_doc_config = {
     # 文档简介
     'content': "Ananas",
 
-    # 需要包含的MarkDown文件 如开启了错误码、日志自动生成，请添加 docs/log.md  docs/error.md
+    # 需要包含的MarkDown文件 如开启了错误码、日志自动生成，请添加 log error
     "nav": []
 }
 
