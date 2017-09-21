@@ -4,6 +4,7 @@ import sys
 import error
 import log
 import table
+import rest_api
 
 from importlib import import_module
 
@@ -23,6 +24,7 @@ class AnanasTemplate(object):
         errors_doc_config = config.errors_doc_config
         log_doc_config = config.log_doc_config
         index_doc_config = config.index_doc_config
+        api_doc_config = config.api_doc_config
 
         # make version
         if log_doc_config.get('if_set_log') is True:
@@ -32,7 +34,10 @@ class AnanasTemplate(object):
         # make markdown
         self.make_markdown(errors_doc_config=errors_doc_config,
                            log_doc_config=log_doc_config,
-                           index_doc_config=index_doc_config)
+                           index_doc_config=index_doc_config,
+                           api_doc_config=api_doc_config)
+        # remove cache
+        os.system("rm -rf " + self.path + "/build")
         # make html
         os.system("python -msphinx -M html " + self.path + " " + self.path + "/build")
 
@@ -46,7 +51,14 @@ class AnanasTemplate(object):
         errors_doc_config = kwargs.get('errors_doc_config')
         log_doc_config = kwargs.get('log_doc_config')
         index_doc_config = kwargs.get('index_doc_config')
-        # try:
+        api_doc_config = kwargs.get('api_doc_config')
+
+        # make api md
+        if api_doc_config.get("if_set_api") is True:
+            api_server = rest_api.AnanasRestApi(path=self.path, api_doc_config=api_doc_config)
+            api_server.set_api()
+            print "Api document was generated successfully！"
+
         # make error md
         if errors_doc_config.get('if_set_errors') is True:
             error_server = error.AnanasError(path=self.path, **errors_doc_config)
@@ -69,13 +81,6 @@ class AnanasTemplate(object):
         # init log
         if log_doc_config.get('if_set_log') is True:
             log_server.initialize()
-        # except Exception, e:
-        #     print "MakeDocError:[%s]", e
-        #     print "Make Doc Failed!!!"
-        #     exit()
-
-
-
 
 if __name__ == "__main__":
     path = sys.argv[1]

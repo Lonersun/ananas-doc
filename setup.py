@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(name='ananas-doc',
-      version=1.2,
+      version=1.2.1,
       description=u"docs tools",
       long_description="",
       classifiers=[],
@@ -23,6 +23,7 @@ setup(name='ananas-doc',
           'sphinx-rtd-theme>=0.2.4',
           'm2r>=0.1.12',
           'pyaml>=3.12',
+          'pymongo>=3.5.1',
       ],
       entry_points={
           'console_scripts': [

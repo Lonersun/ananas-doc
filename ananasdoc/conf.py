@@ -123,6 +123,14 @@ index_doc_config = {
     "nav": []
 }
 
+# api config
+api_doc_config = {
+    "if_set_api": False,
+    "api_dir": "/path",
+    "leve": 2,
+    "title": "",
+}
+
 # error code config
 errors_doc_config = {
     "if_set_errors": False,
