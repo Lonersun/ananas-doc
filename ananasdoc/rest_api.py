@@ -34,7 +34,7 @@ class AnanasRestApi(object):
 
         :return:
         """
-        self.content += "## " + self.config.get('title') + "\n\n"
+        self.content += "## **" + self.config.get('title') + "**\n\n"
         self.set_yml_md()
         self.make_md()
 

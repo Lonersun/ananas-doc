@@ -93,8 +93,8 @@ class AnanasLog(object):
         yml_file = open(self.version_yml, 'w')
         yaml.dump(_doc, yml_file)
         yml_file.close()
-        log_doc = "\n## "
-        log_doc += self.log_doc_config.get('log_title') + "\n"
+        log_doc = "\n## **"
+        log_doc += self.log_doc_config.get('log_title') + "**\n"
         for _log in log:
             log_doc += "### " + _log['date'] + "\n\n"
             log_doc += "**版本:** " + _log['version'] + "\n\n"
