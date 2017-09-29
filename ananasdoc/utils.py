@@ -6,6 +6,7 @@ from ruamel.yaml import round_trip_dump, round_trip_load, load, dump_all
 from bson.json_util import (default as bson_object_default,
                             object_hook as bson_object_hook)
 
+
 def dump_yaml_file(data, path, round_tripping=False):
     with io.open(path, 'w', encoding='utf-8') as writer:
         if round_tripping:
@@ -23,6 +24,7 @@ def load_yaml_file(path, round_tripping=False):
             data = load(reader)
     return data
 
+
 def mkdir(path):
     """
 
@@ -37,6 +39,7 @@ def mkdir(path):
         os.makedirs(path)
     else:
         pass
+
 
 def json_dump(obj):
     return json.dumps(obj, ensure_ascii=False, sort_keys=True, default=bson_object_default, indent=4,

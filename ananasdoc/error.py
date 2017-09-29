@@ -25,7 +25,7 @@ class AnanasError(object):
         self.module_dir = kwargs.get('module_dir')
         self.module_name = kwargs.get('module_name')
         self.error_title = kwargs.get('error_title')
-        self.title = "\n\n## **" + kwargs.get('error_title') + "**\n\n"
+        self.title = "\n\n## " + kwargs.get('error_title') + "\n\n"
         self.path = kwargs.get('path')
 
     def set_md(self):
