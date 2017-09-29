@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(name='ananas-doc',
-      version=1.2.1,
+      version='1.2.2',
       description=u"docs tools",
       long_description="",
       classifiers=[],
@@ -14,9 +14,6 @@ setup(name='ananas-doc',
       platforms='any',
       packages=find_packages(),
       zip_safe=False,
-      # package_data={
-      #     'template': '*',
-      # },
       include_package_data=True,
       install_requires=[
           'sphinx>=1.6.3',

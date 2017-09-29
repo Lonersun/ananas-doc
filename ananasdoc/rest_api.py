@@ -71,7 +71,7 @@ class AnanasRestApi(object):
         """
         route_base = resource_def.get('route_base')
         description = resource_def.get('description')
-        self.content += "### " + leve_str + "、" + description + "\n\n"
+        self.content += "\n### " + leve_str + "、" + description + "\n\n"
         leve = 1
         for route_patten, route_resp in resource_def['apis'].iteritems():
             api_name = route_patten
@@ -90,7 +90,7 @@ class AnanasRestApi(object):
                 # request params
                 parameters = resp_def.get('parameters', None)
                 if not parameters:
-                    return
+                    self.content += "|_|_|_|_|_|_|\n"
                 self.set_req_md(copy.deepcopy(parameters))
 
                 self.content += "\n"
@@ -154,12 +154,15 @@ class AnanasRestApi(object):
         if rule.get('allowed', []):
             for en in rule['allowed']:
                 en_value_str += str(en) + ","
+        description = ""
+        if rule.get('description', None):
+            description = rule['description'].replace('|', '、')
         self.content += "|" + rule['name'] + \
                         "|" + rule['type'] + \
                         "|" + rule['required'] + \
                         "|" + en_value_str + \
                         "|" + rule['in'] + \
-                        "|" + str(rule.get('description', '')) + \
+                        "|" + str(description) + \
                         "|\n"
 
     def set_resp_md(self, responses):
@@ -187,7 +190,10 @@ class AnanasRestApi(object):
                 schema = ref.split('/')[-1]
                 self.set_response(self.definitions[schema]['properties'], "[data].{i}")
             if key == 'extras':
-                self.content += "|" + key + "|" + value['type'] + "|" + value['description'] + "|\n"
+                description = ""
+                if value.get('description', None):
+                    description = value['description'].replace('|', '、')
+                self.content += "|" + key + "|" + value['type'] + "|" + description + "|\n"
         if if_set_response is True:
             self.set_response(responses_data['properties'])
 
@@ -197,7 +203,10 @@ class AnanasRestApi(object):
         for key, value in data.items():
             if value.get('rename'):
                 key = value['rename']
-            self.content += "|" + type + key + "|" + value['type'] + "|" + value.get('description', "") + "|\n"
+            description = ""
+            if value.get('description', None):
+                description = value['description'].replace('|', '、')
+            self.content += "|" + type + key + "|" + value['type'] + "|" + description + "|\n"
             if (value['type'] in ["dict", "object_ref"]) and value.get('schema'):
                 self.set_response(value['schema'], "{" + key + "}")
             if (value['type'] == "list") and value.get('items'):
