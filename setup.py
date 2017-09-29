@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(name='ananas-doc',
-      version='1.2.2',
+      version='1.2.3',
       description=u"docs tools",
       long_description="",
       classifiers=[],
@@ -19,8 +19,7 @@ setup(name='ananas-doc',
           'sphinx>=1.6.3',
           'sphinx-rtd-theme>=0.2.4',
           'm2r>=0.1.12',
-          'pyaml>=3.12',
-          'pymongo>=3.5.1',
+          'ruamel.yaml==0.12.5',
       ],
       entry_points={
           'console_scripts': [
