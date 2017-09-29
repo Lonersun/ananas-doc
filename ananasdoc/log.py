@@ -126,7 +126,7 @@ class AnanasLog(object):
         self.load_version()
         version_doc = """# Write a message for version:
         """
-        version_doc += "\n# The latest version is" + str(self.version)
+        version_doc += "\n# The latest version is " + str(self.version)
         version_doc += "\n# Lines starting with '#' will be ignored.\n"
         f = file(self.version_cache_file, "w+")
         f.write(version_doc)

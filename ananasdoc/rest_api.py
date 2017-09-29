@@ -9,7 +9,6 @@ import datetimeutil
 import urllib
 import exception as errors
 
-from bson import ObjectId
 from collections import OrderedDict
 
 from utils import load_yaml_file, json_dump
@@ -34,7 +33,7 @@ class AnanasRestApi(object):
 
         :return:
         """
-        self.content += "## **" + self.config.get('title') + "**\n\n"
+        self.content += "## " + self.config.get('title') + "\n\n"
         self.set_yml_md()
         self.make_md()
 
@@ -290,11 +289,14 @@ class AnanasRestApi(object):
                 elif 'address' in param_name:
                     return "北京市朝阳区通惠大厦"
                 elif 'id' in param_name:
-                    return str(ObjectId())
+                    return random.choice(["5826650e3d65ce2d0665317f",
+                                          "582661953d65ce2b7b5dde32",
+                                          "5826650e3d65ce2d27645763",
+                                          "580cb92e3d65ce09ebf7dc4e"])
                 elif 'shipping_time' in param_name:
                     return "11:45"
                 elif 'name' in param_name:
-                    return random.choice ( ["驴与鱼", "绿与鱼", '绿与驴', '驴与绿', '小犟驴'] )
+                    return random.choice(["驴与鱼", "绿与鱼", '绿与驴', '驴与绿', '小犟驴'])
                 elif 'code' in param_name:
                     return ''.join(random.sample(string.digits, 6))
             return ''.join(random.sample(string.ascii_letters + string.digits, 6))
@@ -314,7 +316,10 @@ class AnanasRestApi(object):
                     return [116.23233, 39.12322]
             return []
         elif params_type in ['ObjectId', "objectid"]:
-            return str(ObjectId())
+            return random.choice(["5826650e3d65ce2d0665317f",
+                                  "582661953d65ce2b7b5dde32",
+                                  "5826650e3d65ce2d27645763",
+                                  "580cb92e3d65ce09ebf7dc4e"])
         return None
 
     def make_resp_demo(self, responses, uri):

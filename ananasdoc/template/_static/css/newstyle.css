@@ -16,7 +16,8 @@
 }
 .wy-side-scroll .wy-menu-vertical li.current a{
     /*下拉菜单文字颜色*/
-    color: #505050;
+    /*color: #505050;*/
+    color: black;
 }
 .current .toctree-l1 .toctree-l2 .reference:hover{
     /*滑动颜色*/
