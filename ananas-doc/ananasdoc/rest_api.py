@@ -27,7 +27,11 @@ class AnanasRestApi(object):
         """
         self.config = kwargs.get('api_doc_config')
         self.path = kwargs.get('path')
-
+        self.schema_template = self.config.get("schema_template") or "default"
+        self.api_schema_mp = {
+            "lcylln": self.process_resource_context_lcylln,
+            "default": self.process_resource_context
+        }
     def set_api(self):
         """
 
@@ -46,20 +50,38 @@ class AnanasRestApi(object):
         leve_str = str(self.config.get('leve')) + "."
         leve = 1
 
-        self.definitions = load_yaml_file(path + '/definitions.yml')
-        resources = OrderedDict()
+        if self.schema_template != "lcylln":
+            self.definitions = load_yaml_file(path + '/definitions.yml')
+        else:
+            self.definitions = {}
+
         try:
-            for pkg_dir in filter(os.path.isdir, glob.glob(path + '/*')):
-                for mod_file in glob.glob('%s/*.yml' % pkg_dir):
-                    mod_name = os.path.basename(mod_file).rstrip('.yml')
-                    resource_text = load_yaml_file(mod_file, False)
-                    for resource_def in resource_text:
-                        _leve_str = leve_str + str(leve)
-                        self.process_resource_context(resource_def, _leve_str)
-                        leve += 1
+            for pkg_dir in glob.glob('%s/*' % path):
+                if os.path.basename(pkg_dir) == "definitions.yml":
+                    continue
+
+                leve, leve_str = self.generate_content(pkg_dir, leve, leve_str)
         except errors.AnanasDocError, e:
             print "[Error]:" + str(e.code) + ":" + e.message
             exit()
+
+    def generate_content(self, path, leve, leve_str):
+        """
+
+        :param path:
+        :return:
+        """
+        if os.path.isdir(path):
+            for p in os.listdir(path):
+                return self.generate_content(os.path.join(path, p), leve, leve_str)
+        else:
+            resource_text = load_yaml_file(path, False)
+            for resource_def in resource_text:
+                _leve_str = leve_str + str(leve)
+                self.api_schema_mp[self.schema_template](resource_def, _leve_str)
+                leve += 1
+
+        return leve, leve_str
 
     def process_resource_context(self, resource_def, leve_str):
         """
@@ -118,6 +140,38 @@ class AnanasRestApi(object):
                 self.content += "```\n"
                 self.content += "\n"
                 leve += 1
+
+    def process_resource_context_lcylln(self, resource_def, leve_str):
+        """
+
+        :param resource_def:
+        :param leve_str:
+        :return:
+        """
+        uri = resource_def["apis"]
+        description = resource_def.get('description', "接口名")
+        self.content += "\n### " + leve_str + "、" + description + "\n\n"
+        leve = 1
+        for method, params_mp in resource_def['method'].iteritems():
+            self.content += "#### " + leve_str + "." + str(leve) + "、" + params_mp.get('summary', "接口功能描述") + "\n\n"
+            if str(params_mp.get('description')):
+                self.content += "**说明：%s**\n\n" % str(params_mp.get('description'))
+            self.content += "**接口地址：%s**\n\n" % uri
+            self.content += "**请求方式：%s**\n\n" % method.upper()
+            self.content += "**请求参数：**\n\n"
+            self.content += "|参数名称|类型|是否必须|允许值|参数位置|描述|\n"
+            self.content += "|:--------|:----|:--------|:------|:--------|:------|\n"
+            # request params
+            parameters = params_mp.get('parameters', None)
+            if not parameters:
+                self.content += "|_|_|_|_|_|_|\n"
+            self.set_req_md(copy.deepcopy(parameters))
+
+            self.content += "\n"
+            self.content += "**成功响应：**\n\n"
+            self.content += "{\n\n}\n"
+
+            leve += 1
 
     def set_req_md(self, rules):
         """
@@ -379,3 +433,21 @@ class AnanasRestApi(object):
         f = file(self.path + '/docs/api.md', "w+")
         f.write(self.content)
         f.close()
+
+
+
+
+if __name__ == "__main__":
+    kw = {
+        "api_doc_config": {
+            "if_set_api": True,
+            "api_dir": "/Users/Song/Desktop/www/ananas-doc/api_schema",
+            "leve": 2,
+            "title": "接口文档",
+            "schema_template": "lcylln"
+        },
+        'path': "/Users/Song/Desktop/www/ananas-doc",
+
+    }
+    a = AnanasRestApi(**kw)
+    a.set_api()

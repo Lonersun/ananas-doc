@@ -129,6 +129,7 @@ api_doc_config = {
     "api_dir": "/path",
     "leve": 2,
     "title": "",
+    "schema_template": "default"    # lcylln, default
 }
 
 # error code config

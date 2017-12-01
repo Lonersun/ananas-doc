@@ -1,0 +1,35 @@
+---
+wsgi:
+  host: 0.0.0.0
+  port: 6678
+  debug: True
+  cookie_secret: "f465ca164f0e"
+  max_buffer_size: 10737418240
+
+handlers:       # handler 目录，可以是多个目录
+  - handlers
+
+db_config:      # mongo配置
+  host: "127.0.0.1"
+  port: 27017
+  database: "yyq"
+
+redis_config:
+  host: "127.0.0.1"
+  port: "6379"
+
+mq_config:      # 消息队列配置
+  workers:
+    - works
+  host: "127.0.0.1"
+  port: 6379
+  name: "mq"    # key 名称
+  db: 9         # redis 数据库顺序
+
+ssdb_config:
+  host: "127.0.0.1"
+  port: "8888"
+
+template_path: ""
+static_path: ""
+
