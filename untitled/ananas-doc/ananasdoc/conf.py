@@ -126,7 +126,7 @@ index_doc_config = {
 # api config
 api_doc_config = {
     "if_set_api": False,            # Using YML to generate .md
-    "api_dir": "/path",             # abs path of your api_schema dir.
+    "api_dir": "/path",             # abs path of your project.
     "leve": 2,                      #
     "title": "",                    # give the title by level start path.
     "schema_template": "default"    # with yml template。 lcylln, default

@@ -31,9 +31,9 @@ html_sidebars = {
 
 # set document title author
 
-project = u'untitled'
-copyright = u'2017, untitled'
-author = u'untitled'
+project = u'doc'
+copyright = u'2017, doc'
+author = u'doc'
 
 # API version
 version = u''
@@ -58,10 +58,11 @@ index_doc_config = {
 
 # api config
 api_doc_config = {
-    "if_set_api": True,
-    "api_dir": "/Users/Song/Desktop/www/untitled/api_schema",
-    "leve": 2,
-    "title": "接口文档",
+    "if_set_api": True,            # Using YML to generate .md
+    "api_dir": "/Users/Song/Desktop/www/untitled/api_schema",             # abs path of your project.
+    "leve": 2,                      #
+    "title": "fddf",                    # give the title by level start path.
+    "schema_template": "lcylln"    # with yml template。 lcylln, default
 }
 
 # error code config
