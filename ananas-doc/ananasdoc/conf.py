@@ -125,11 +125,11 @@ index_doc_config = {
 
 # api config
 api_doc_config = {
-    "if_set_api": False,
+    "if_set_api": False,            # Using YML to generate .md
     "api_dir": "/path",
     "leve": 2,
     "title": "",
-    "schema_template": "default"    # lcylln, default
+    "schema_template": "default"    # with yml template。 lcylln, default
 }
 
 # error code config
